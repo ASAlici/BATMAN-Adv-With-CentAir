@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "soft-interface.h": "c",
+        "sprintf.h": "c",
+        "types.h": "c",
+        "collision_mode.h": "c",
+        "hard-interface.h": "c"
+    }
+}

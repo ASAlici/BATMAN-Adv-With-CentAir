@@ -1,0 +1,1 @@
+cmd_/home/ahmet3/batman-adv-2024.4/net/batman-adv/batman-adv.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -z noexecstack   --build-id  -T ./scripts/module-common.lds -o /home/ahmet3/batman-adv-2024.4/net/batman-adv/batman-adv.ko /home/ahmet3/batman-adv-2024.4/net/batman-adv/batman-adv.o /home/ahmet3/batman-adv-2024.4/net/batman-adv/batman-adv.mod.o;  true

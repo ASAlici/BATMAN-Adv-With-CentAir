@@ -1,0 +1,95 @@
+{
+    "alive": 0,
+    "bridge_name": "diamond-br",
+    "mesh_nodes": [
+        {
+            "name": "node0",
+            "links": [
+                {
+                    "whom": "node1",
+                    "quality": 60
+                },
+                {
+                    "whom": "node2",
+                    "quality": 90
+                },
+                {
+                    "whom": "node3",
+                    "quality": 60
+                }
+            ]
+        },
+        {
+            "name": "node1",
+            "links": [
+                {
+                    "whom": "node0",
+                    "quality": 60
+                },
+                {
+                    "whom": "node2",
+                    "quality": 90
+                },
+                {
+                    "whom": "node4",
+                    "quality": 60
+                }
+            ]
+        },
+        {
+            "name": "node3",
+            "links": [
+                {
+                    "whom": "node0",
+                    "quality": 60
+                },
+                {
+                    "whom": "node2",
+                    "quality": 90
+                },
+                {
+                    "whom": "node4",
+                    "quality": 60
+                }
+            ]
+        },
+        {
+            "name": "node4",
+            "links": [
+                {
+                    "whom": "node1",
+                    "quality": 60
+                },
+                {
+                    "whom": "node2",
+                    "quality": 90
+                },
+                {
+                    "whom": "node3",
+                    "quality": 60
+                }
+            ]
+        },
+        {
+            "name": "node2",
+            "links": [
+                {
+                    "whom": "node0",
+                    "quality": 90
+                },
+                {
+                    "whom": "node1",
+                    "quality": 90
+                },
+                {
+                    "whom": "node3",
+                    "quality": 90
+                },
+                {
+                    "whom": "node4",
+                    "quality": 90
+                }
+            ]
+        }
+    ]
+}

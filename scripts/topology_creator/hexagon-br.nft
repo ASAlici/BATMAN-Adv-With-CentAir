@@ -1,0 +1,28 @@
+#!/usr/sbin/nft -f
+flush ruleset bridge
+table bridge filter {
+chain FORWARD {
+type filter hook forward priority -200; policy accept;
+iifname "node0" oifname "node1" accept
+iifname "node0" oifname "node5" accept
+iifname "node0" oifname "node6" accept
+iifname "node1" oifname "node0" accept
+iifname "node1" oifname "node2" accept
+iifname "node1" oifname "node6" accept
+iifname "node3" oifname "node2" accept
+iifname "node3" oifname "node4" accept
+iifname "node3" oifname "node6" accept
+iifname "node4" oifname "node3" accept
+iifname "node4" oifname "node5" accept
+iifname "node4" oifname "node6" accept
+iifname "node2" oifname "node1" accept
+iifname "node2" oifname "node3" accept
+iifname "node5" oifname "node4" accept
+iifname "node5" oifname "node0" accept
+iifname "node6" oifname "node0" accept
+iifname "node6" oifname "node1" accept
+iifname "node6" oifname "node3" accept
+iifname "node6" oifname "node4" accept
+meta obrname "hexagon-br" drop
+}
+}

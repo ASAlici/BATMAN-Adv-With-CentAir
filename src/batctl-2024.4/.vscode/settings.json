@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "sys.h": "c",
+        "batadv_packet_compat.h": "c",
+        "batadv_packet.h": "c",
+        "netlink.h": "c",
+        "functions.h": "c",
+        "inttypes.h": "c"
+    }
+}

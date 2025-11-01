@@ -1,0 +1,121 @@
+{
+    "alive": 1,
+    "bridge_name": "hexagon-br",
+    "mesh_nodes": [
+        {
+            "name": "node0",
+            "links": [
+                {
+                    "whom": "node1",
+                    "quality": 100
+                },
+                {
+                    "whom": "node5",
+                    "quality": 100
+                },
+                {
+                    "whom": "node6",
+                    "quality": 100
+                }
+            ]
+        },
+        {
+            "name": "node1",
+            "links": [
+                {
+                    "whom": "node0",
+                    "quality": 100
+                },
+                {
+                    "whom": "node2",
+                    "quality": 100
+                },
+                {
+                    "whom": "node6",
+                    "quality": 100
+                }
+            ]
+        },
+        {
+            "name": "node3",
+            "links": [
+                {
+                    "whom": "node2",
+                    "quality": 100
+                },
+                {
+                    "whom": "node4",
+                    "quality": 100
+                },
+                {
+                    "whom": "node6",
+                    "quality": 100
+                }
+            ]
+        },
+        {
+            "name": "node4",
+            "links": [
+                {
+                    "whom": "node3",
+                    "quality": 100
+                },
+                {
+                    "whom": "node5",
+                    "quality": 100
+                },
+                {
+                    "whom": "node6",
+                    "quality": 100
+                }
+            ]
+        },
+        {
+            "name": "node2",
+            "links": [
+                {
+                    "whom": "node1",
+                    "quality": 100
+                },
+                {
+                    "whom": "node3",
+                    "quality": 100
+                }
+            ]
+        },
+        {
+            "name": "node5",
+            "links": [
+                {
+                    "whom": "node4",
+                    "quality": 100
+                },
+                {
+                    "whom": "node0",
+                    "quality": 100
+                }
+            ]
+        },
+        {
+            "name": "node6",
+            "links": [
+                {
+                    "whom": "node0",
+                    "quality": 100
+                },
+                {
+                    "whom": "node1",
+                    "quality": 100
+                },
+                {
+                    "whom": "node3",
+                    "quality": 100
+                },
+                {
+                    "whom": "node4",
+                    "quality": 100
+                }
+            ]
+        }
+    ]
+}

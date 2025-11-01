@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# Remote Command Executor
+# Usage: ./remote_exec.sh [OPTIONS] "command"
+
+# Configuration
+HOSTS_FILE="hosts"  # File containing list of hosts
+DEFAULT_USER="root"    # Default SSH username
+SSH_OPTIONS="-o ConnectTimeout=10 -o StrictHostKeyChecking=no -o BatchMode=yes"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+load_hosts() {
+    local hosts_array=()
+    
+    if [[ -f "$HOSTS_FILE" ]]; then
+        #echo -e "${BLUE}Loading hosts from $HOSTS_FILE${NC}"
+        while IFS= read -r line; do
+            # Skip empty lines and comments
+            [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+            hosts_array+=("$line")
+        done < "$HOSTS_FILE"
+    else
+        echo -e "${YELLOW}Hosts file $HOSTS_FILE not found, I'm going to die now."
+        exit 1
+    fi
+    
+    echo "${hosts_array[@]}"
+}
+
+execute_command() {
+    local host="$1"
+    local user="$2"
+    local command="$3"
+
+    
+    # Execute the command and capture both stdout and stderr
+    local output
+    local exit_code
+    
+    output=$(ssh $SSH_OPTIONS "$user@$host" "cd /home/ahmet3 && $command" 2>&1)
+    exit_code=$?
+    
+    # Display results
+    echo -e "${GREEN}=== $host ===${NC}"
+    if [[ $exit_code -eq 0 ]]; then
+        if [[ -z "$output" ]]; then
+            echo -e "${YELLOW}[Empty output from $host]${NC}"
+        else
+            echo "$output"
+        fi
+    else
+        echo -e "${RED}Error (exit code: $exit_code):${NC}"
+        echo "$output"
+    fi
+    echo ""
+    
+    return $exit_code
+}
+
+list_hosts() {
+    local hosts=($(load_hosts))
+    echo -e "${GREEN}Available hosts:${NC}"
+    for i in "${!hosts[@]}"; do
+        printf "%2d. %s\n" $((i+1)) "${hosts[i]}"
+    done
+}
+
+
+TARGET_HOST=""
+USERNAME="$DEFAULT_USER"
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -h|--host)
+            TARGET_HOST="$2"
+            shift 2
+            ;;
+        -f|--file)
+            HOSTS_FILE="$2"
+            shift 2
+            ;;
+        -l|--list)
+            list_hosts
+            exit 0
+            ;;
+        -*)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+        *)
+            COMMAND="$1"
+            shift
+            break
+            ;;
+    esac
+done
+
+if [[ -z "$COMMAND" ]]; then
+    echo -e "${RED}Error: No command specified${NC}"
+    exit 1
+fi
+
+echo -e "${BLUE}Remote Command Executor${NC}"
+echo -e "${BLUE}Command: ${YELLOW}$COMMAND${NC}"
+echo -e "${BLUE}User: ${YELLOW}$USERNAME${NC}"
+echo ""
+
+# Execute based on mode
+if [[ -n "$TARGET_HOST" ]]; then
+    # Unicast mode
+    echo -e "${GREEN}Unicast mode - Target: $TARGET_HOST${NC}"
+    execute_command "$TARGET_HOST" "$USERNAME" "$COMMAND" 
+else
+    # Broadcast mode
+    HOSTS=($(load_hosts))
+    echo -e "${GREEN}Broadcast mode - Targets: ${#HOSTS[@]} hosts${NC}"
+    
+    for host in "${HOSTS[@]}"; do
+        execute_command "$host" "$USERNAME" "$COMMAND" 
+    done
+fi
+
+echo -e "${GREEN}Execution completed.${NC}"
+
